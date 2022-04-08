@@ -45,3 +45,137 @@ border.css
 移动端有300ms延迟，因此我们安装一个`fastclick`库。并且在main.js中导入
 
 ![image-20220408092921508](https://raw.githubusercontent.com/HYHL0909/images/main/202204080929776.png)
+
+## 第三次提交
+
+我们使用`stylus`进行`css`样式的书写。
+
+首先要安装`stylus`
+
+`npm install stylus`
+
+还要安装`stylus-loader`
+
+注意这里要安装的是较低版本的。要不然书写样式时识别不了，会报错。
+
+`npm install stylus-loader@3.0.2`
+
+然后书写样式代码时，
+
+~~~html
+<style lang="stylus" scoped>
+</style>
+
+~~~
+
+![在这里插入图片描述](https://raw.githubusercontent.com/HYHL0909/images/main/202204081051312.png)
+
+图片是2倍图，是86像素，那我们前端设计就要 43px。然后我们使用rem
+
+在我们的reset.css文件里我们设计我们的html 中的font-size是50px。。
+
+那么1rem=50px。
+
+2rem=100px
+
+43px=0.86rem。
+
+所以在二倍图的设计里就很方便的。
+
+
+
+## 第四次提交
+
+1. 在我们的项目里使用`iconfont`图标
+
+   - `iconfont`网站：
+
+     注册账号，建立项目，寻找自己想要的图标，加入购物车。添加到项目-->下载到本地-->解压。
+
+   - 本地项目：
+
+     - 将有用的文件添加到我们的项目上。有用的文件是啥呢。字体文件(最后三个）+`iconfont.css`文件![image-20220408170004198](https://raw.githubusercontent.com/HYHL0909/images/main/202204081700607.png)
+
+     - 在styles里创建文件夹`iconfont `用于放置字体文件。
+
+     - 将样式文件添加到`src/assets/styles`，
+
+       然后去修改里面`src`里的`url`:就是将路径修改一下就可以了。
+
+   - 开始在项目里用起来吧！
+
+     从`iconfont`网站里下载里面有个html文件，打开它，清清楚楚明明白白教你使用方式。一共有三种方式，我们喜欢用Unicode方式。前两步已经完成。现在就是第三步。
+
+     ![image-20220408171033657](https://raw.githubusercontent.com/HYHL0909/images/main/202204081710728.png)
+
+     这里几点注意事项：
+
+     - 注意class的名字 要是`iconfont`
+
+       你可以是`iconfont search` 写样式时就直接 `.search`
+
+       但是不可以是`iconfont-search`,否则会变成框框。不知道为啥！
+
+     - 未必就得用span，可以改成div等，开心就好。但是注意，span是内联元素，只能容纳文本或其他内联元素，然后！和其他内联元素一样,内联元素的宽度和高度就是包含的文字或图片的宽度和高度 
+
+       **给span标签设置高height、宽width、上下内边距(padding-top/bottom)、上下外边距(margin-top/bottom)都是不起作用的。 **给span标签设置左右内边距(padding-left/right)、左右外边距(margin-left/right)、行高(line-height)是有效的。 
+
+2. 对代码进行简化
+
+   - 提取常用变量名。
+
+     一般一个软件会有一个主题色对吧，这个主题色在哪哪个组件都很常用，所以，我们可以将这种放在变量里。
+
+     在styles里创建`variables.styl`文件。
+
+     ~~~stylus
+     $bgColor = #00bcd4
+     ~~~
+
+     然后在想要用到该变量的样式里引入
+
+     ~~~vue
+     <style lang="stylus" scoped>
+       @import '../../../styles/variables.styl'
+         .header
+           display:flex
+           line-height: 0.86rem
+           background: $bgColor
+     <style>     
+     ~~~
+
+     可能的错误：
+
+     - `vscode` 错误提示`{ expected css(css-lcurlyexpected)`
+
+       看看右下角语言是不是`styl`
+
+       ![image-20220408172034138](https://raw.githubusercontent.com/HYHL0909/images/main/202204081720216.png)
+
+       
+
+   - 修改`webpack`配置简化路径
+
+     看看上面那个引入，是不是看着就贼膈应人。
+
+     就好像我们可以把@ 和`src`绑定在一起（在`src`目录下的文件，引用@是`src`，不在`src`目录下的文件，用~@表示`src`），我们也可以把其他的绑定在一起。
+
+     打开：build/webpack.base.conf.js
+
+     找到resolve：看到@了，和它一样格式，爱咋加咋加。
+
+     ~~~javascript
+       resolve: {
+         extensions: ['.js', '.vue', '.json'],
+         alias: {
+           'vue$': 'vue/dist/vue.esm.js',
+           '@': resolve('src'),
+           'styles':resolve('src/assets/styles')
+         }
+       },
+     ~~~
+
+     修改完`webpack`配置，重新，`npm run dev`.
+
+     
+
