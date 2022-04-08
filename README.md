@@ -280,6 +280,7 @@ data () {
          swiperOption:{
               pagination:'.swiper-pagination'，
               paginationClickable :true,   
+             loop:true,//可以
           }
       
     }
@@ -300,4 +301,6 @@ swiper-pagination-bullet-active，是这个类控制的，因此我们尝试将�
 .wrapper >>> .swiper-pagination-bullet-active
   background: #fff
 ~~~
+
+循环Slider的实现 v-for 加上list
 
