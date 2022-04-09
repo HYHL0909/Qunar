@@ -291,11 +291,11 @@ data () {
 
 swiper-pagination-bullet-active，是这个类控制的，因此我们尝试将该类的背景颜色修改成红色，但是这无效的！
 
-原因：首先明确一点：我们定义的HomeSwiper是Swiper的父组件！
+**原因**：首先明确一点：我们定义的HomeSwiper是Swiper的父组件！
 
 再明确一点：scoped决定了这个样式的作用域只能是HomeSwiper组件。
 
-因此我们穿透子组件
+在父组件上企图改变子组件的样式，可以使用穿透。穿透子组件。
 
 ~~~stylus
 .wrapper >>> .swiper-pagination-bullet-active
