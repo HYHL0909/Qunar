@@ -73,5 +73,5 @@ export default {
       border-radius: 0.1rem
       padding:.1rem
       color: #fff
-      margin-top: .16rem
+      margin-top: .17rem
 </style>
