@@ -12,9 +12,9 @@
           </li>
       </ul>
   </div>
-  
 </template>
 <script>
+/*eslint-disable */
 export default {
   name: 'HomeRecommend',
   data () {
@@ -40,11 +40,11 @@ export default {
 @import '~styles/mixins.styl';
  .title
    margin-top: .2rem
-   line-height: .8rem
-   font-size: .4rem
+   line-height: .7rem
+   font-size: .3rem
    background: #eee
    text-indent: .3rem
-   height:0.8rem
+   height:0.7rem
 .item
   display: flex
   height: 1.9rem
@@ -60,7 +60,7 @@ export default {
     min-width:0
     .item-title
       line-height: .54rem
-      font-size: .40rem
+      font-size: .34rem
       ellipsis()
     .item-desc
       line-height: .4rem
