@@ -465,7 +465,7 @@ ellipsis()
 ~~~
 
 然后在样式里去引用。
-<<<<<<< HEAD
+
 ## 第七次提交：推荐部分的实现
 ![image-20220410163004463](https://raw.githubusercontent.com/HYHL0909/images/main/202204101630981.png)
 
