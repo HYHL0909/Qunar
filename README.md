@@ -220,26 +220,26 @@ Vue.use(VueAwesomeSwiper)
 > ~~~vue
 > <!-- The ref attr used to find the swiper instance -->
 > <template>
->   <swiper :options="swiperOption" >
->     <!-- slides -->
->     <swiper-slide>I'm Slide 1</swiper-slide>
->     <swiper-slide>I'm Slide 2</swiper-slide>
->     <!-- Optional controls -->
->     <div class="swiper-pagination"  slot="pagination"></div>
->      <div class="swiper-button-prev" slot="button-prev"></div>
->     <div class="swiper-button-next" slot="button-next"></div>
->     <div class="swiper-scrollbar"   slot="scrollbar"></div>
->   </swiper>
+> <swiper :options="swiperOption" >
+>  <!-- slides -->
+>  <swiper-slide>I'm Slide 1</swiper-slide>
+>  <swiper-slide>I'm Slide 2</swiper-slide>
+>  <!-- Optional controls -->
+>  <div class="swiper-pagination"  slot="pagination"></div>
+>   <div class="swiper-button-prev" slot="button-prev"></div>
+>  <div class="swiper-button-next" slot="button-next"></div>
+>  <div class="swiper-scrollbar"   slot="scrollbar"></div>
+> </swiper>
 > </template>
 > <script>
 > export default {
->   name: 'HomeSwiper',
->     <!-- 数据是因为模板上有option -->
->   data () {
->     return {
->       swiperOption: {}
->     }
->   }
+> name: 'HomeSwiper',
+>  <!-- 数据是因为模板上有option -->
+> data () {
+>  return {
+>    swiperOption: {}
+>  }
+> }
 > }
 > </script>
 > ~~~
@@ -304,7 +304,7 @@ swiper-pagination-bullet-active，是这个类控制的，因此我们尝试将�
 
 循环Slider的实现 v-for 加上list
 
-### 第六次提交
+## 第六次提交
 
 ![image-20220409222604201](https://raw.githubusercontent.com/HYHL0909/images/main/202204092226138.png)
 
@@ -465,8 +465,8 @@ ellipsis()
 ~~~
 
 然后在样式里去引用。
-### 第七次提交：推荐部分的实现
-
+<<<<<<< HEAD
+## 第七次提交：推荐部分的实现
 ![image-20220410163004463](https://raw.githubusercontent.com/HYHL0909/images/main/202204101630981.png)
 
 网页布局
