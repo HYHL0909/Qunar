@@ -220,26 +220,26 @@ Vue.use(VueAwesomeSwiper)
 > ~~~vue
 > <!-- The ref attr used to find the swiper instance -->
 > <template>
->   <swiper :options="swiperOption" >
->     <!-- slides -->
->     <swiper-slide>I'm Slide 1</swiper-slide>
->     <swiper-slide>I'm Slide 2</swiper-slide>
->     <!-- Optional controls -->
->     <div class="swiper-pagination"  slot="pagination"></div>
->      <div class="swiper-button-prev" slot="button-prev"></div>
->     <div class="swiper-button-next" slot="button-next"></div>
->     <div class="swiper-scrollbar"   slot="scrollbar"></div>
->   </swiper>
+> <swiper :options="swiperOption" >
+>  <!-- slides -->
+>  <swiper-slide>I'm Slide 1</swiper-slide>
+>  <swiper-slide>I'm Slide 2</swiper-slide>
+>  <!-- Optional controls -->
+>  <div class="swiper-pagination"  slot="pagination"></div>
+>   <div class="swiper-button-prev" slot="button-prev"></div>
+>  <div class="swiper-button-next" slot="button-next"></div>
+>  <div class="swiper-scrollbar"   slot="scrollbar"></div>
+> </swiper>
 > </template>
 > <script>
 > export default {
->   name: 'HomeSwiper',
->     <!-- 数据是因为模板上有option -->
->   data () {
->     return {
->       swiperOption: {}
->     }
->   }
+> name: 'HomeSwiper',
+>  <!-- 数据是因为模板上有option -->
+> data () {
+>  return {
+>    swiperOption: {}
+>  }
+> }
 > }
 > </script>
 > ~~~
@@ -304,7 +304,7 @@ swiper-pagination-bullet-active，是这个类控制的，因此我们尝试将�
 
 循环Slider的实现 v-for 加上list
 
-### 第六次提交
+## 第六次提交
 
 ![image-20220409222604201](https://raw.githubusercontent.com/HYHL0909/images/main/202204092226138.png)
 
@@ -465,3 +465,30 @@ ellipsis()
 ~~~
 
 然后在样式里去引用。
+## 第七次提交：推荐部分的实现
+
+![image-20220410163004463](https://raw.githubusercontent.com/HYHL0909/images/main/202204101630981.png)
+
+网页布局
+
+~~~html
+      <div class="title">热销推荐</div>
+      <ul>
+          <li class="item" >
+            <img class="item-img" src="" >
+            <div class="item-info">
+                <p class="item-title"></p>
+                <p class="item-desc"></p>
+                <button class="item-button"></button>
+            </div>
+          </li>
+      </ul>
+~~~
+
+图片和描述可以用flex布局。那么就要先在他们的父级元素 `item` 中 `display:flex` 
+
+固定图片的宽高。
+
+让item-info占据剩余的空间`flex:1`
+
+最后注意一点：就是当`item-desc`内容很多的时候我们可以让它以省略号的方式出现，但是此时记得先把`item-info的min-width `设置为0.
