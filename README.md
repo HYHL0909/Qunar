@@ -465,7 +465,11 @@ ellipsis()
 ~~~
 
 然后在样式里去引用。
+<<<<<<< HEAD
 ## 第七次提交：推荐部分的实现
+=======
+### 第七次提交：推荐部分的实现
+>>>>>>> db630ad74ef225422f3ab3cd7f8dcc181b9e691d
 
 ![image-20220410163004463](https://raw.githubusercontent.com/HYHL0909/images/main/202204101630981.png)
 
@@ -491,4 +495,8 @@ ellipsis()
 
 让item-info占据剩余的空间`flex:1`
 
+<<<<<<< HEAD
 最后注意一点：就是当`item-desc`内容很多的时候我们可以让它以省略号的方式出现，但是此时记得先把`item-info的min-width `设置为0.
+=======
+最后注意一点：就是当`item-desc`内容很多的时候我们可以让它以省略号的方式出现，但是此时记得先把`item-info的min-width `设置为0.
+>>>>>>> db630ad74ef225422f3ab3cd7f8dcc181b9e691d
