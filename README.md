@@ -304,3 +304,164 @@ swiper-pagination-bullet-active，是这个类控制的，因此我们尝试将�
 
 循环Slider的实现 v-for 加上list
 
+### 第六次提交
+
+![image-20220409222604201](https://raw.githubusercontent.com/HYHL0909/images/main/202204092226138.png)
+
+新功能：创建新分支。
+
+创建一个新的组件叫做`Icons.vue`,在主组件里导入。
+
+开始实现组件！！！
+
+**布局**
+
+![image-20220409232539198](https://raw.githubusercontent.com/HYHL0909/images/main/202204092325310.png)
+
+~~~html
+   <div class="icons">
+        <div class="icon" >
+          <div class="icon-img"><img class="icon-img-content" src="" alt=""/></div>   
+          <p class="img-desc">热门景点</p>
+        </div>
+    </div>
+~~~
+
+灰色：是icons。蓝色＋黄色：是icon。粉色：`icon-img`。蓝色: `img-desc`
+
+icons宽高2：1，要先进行占位，要不然就会出现上面那样的抖动！占位复习一遍！！
+
+就是在外面包裹一层div，设置div的样式为
+
+~~~stylus
+.icons
+  overflow: hidden
+  width: 100%
+  height: 0
+  padding-bottom:50%
+~~~
+
+里面出现8个小图标。
+
+小图标我们让它浮动，而且宽度25%。高度占25%
+
+~~~stylus
+    .icon
+      float: left
+      width: 25%
+      padding-bottom: 25%
+~~~
+
+但是这样的话第一个小图标有了高度后就撑开了，然后下面的图标挤下去了。因此我们让它溢出来的部分藏起来。
+
+图片用一个div包裹，将它束缚在这个div里用的是绝对定位。
+
+它的父级 icon是relative，如果没有指定，就是相对于浏览器。
+
+~~~stylus
+      position: relative
+      .icon-img
+        position:absolute
+        top:0
+        left:0
+        right:0
+        bottom:.44rem
+~~~
+
+但是这样呢 图标是能够限制在一定范围内，但图标因为太大了，只展现出来了一半。那我们就让图片占据 height：100%，剩下的就是修饰了。居中啦等。
+
+~~~stylus
+   .icon-img-content
+          height: 100%
+          display: block
+          margin: 0 auto
+~~~
+
+
+
+如果我们有9个图标我们希望能够实现轮播图拖动的效果。套用轮播图组件+算法超过8就在另外一页。
+
+我们要套用swider 组件。
+
+~~~html
+<swiper>
+    <swiper-slide  v-for="">
+        <div v-for="">
+            <div>
+                <img>
+            </div>
+            <p></p>
+        </div>
+    </swiper-slide>
+</swiper>
+~~~
+
+我们要让高度和icons一致，穿透
+
+~~~stylus
+.icons >>> .swiper-container
+    height:0
+    width:100%
+    padding-bottom:50%
+    overflow: hidden
+~~~
+
+
+
+list循环，但是第九个不在第二页  利用计算属性。将一维数组变成一个二维
+
+~~~javascript
+computed: {
+      pages () {
+        const pages = []
+        this.iconList.forEach((item,index) => {
+          const page=Math.floor(index / 8)
+          if(!pages[page]){
+            pages[page] = []
+          }
+          pages[page].push(item)
+        })
+        return pages
+      }
+    }
+~~~
+
+然后用双层v-for循环。
+
+~~~html
+<swiper>
+    <swiper-slide  v-for="">
+        <div v-for="">
+            <div>
+                <img>
+            </div>
+            <p></p>
+        </div>
+    </swiper-slide>
+</swiper>
+~~~
+
+
+
+静态资源引用
+
+图片一类的静态文件，应该放在这个static文件夹（与src同级）下
+
+这个文件夹下的文件（夹）会按照原本的结构放在网站根目录下
+
+这时我们再去使用/static绝对路径，就可以访问这些静态文件了
+
+注意：这样的话必须写成绝对路径如images:[{src:”/static/1.png”},{src:”/static/2.png”}]
+
+
+
+如果字太多要让它显示3个点的话：
+
+~~~stylus
+ellipsis()
+  overflow: hidden
+  white-space:nowrap
+  text-overflow: ellipsis
+~~~
+
+然后在样式里去引用。
