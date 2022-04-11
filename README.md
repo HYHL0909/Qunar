@@ -465,7 +465,6 @@ ellipsis()
 ~~~
 
 然后在样式里去引用。
-
 ## 第七次提交：推荐部分的实现
 ![image-20220410163004463](https://raw.githubusercontent.com/HYHL0909/images/main/202204101630981.png)
 
@@ -492,3 +491,97 @@ ellipsis()
 让item-info占据剩余的空间`flex:1`
 
 最后注意一点：就是当`item-desc`内容很多的时候我们可以让它以省略号的方式出现，但是此时记得先把`item-info的min-width `设置为0.
+
+
+
+## 第八次提交：周末游组件
+
+![image-20220410214234412](https://raw.githubusercontent.com/HYHL0909/images/main/202204102142636.png)
+
+就是和上面的推荐部分组件很像。
+
+## 第九次提交 ：动态获取首页内容
+
+让我们动态获取首页的内容，比如一些图片，logo等等
+
+`axios`进行ajax项目的请求。
+
+安装 npm
+
+static 里放数据。放在本地，不上传到库，那么就 `.gitignore`里添加地址。
+
+将本地地址改成api
+
+代理功能。config里的index.js
+
+是webpack-dev-server 提供的
+
+~~~js
+ proxyTable: {
+      '/api':{
+        target: 'http://localhost:8080',
+        pathRewrite: {
+          '^/api': '/static/mock'
+        }
+      }
+~~~
+
+记住改了配置要重新启动服务器
+
+
+
+我们利用axios 获取数据，记住在home里请求。请求一次比请求很多次好
+
+
+
+~~~JavaScript
+  methods: {
+    getHomeInfo () {
+      axios.get('/api/index.json').then(this.getHomeInfoSucc)
+    },
+    getHomeInfoSucc (res) {
+      res = res.data
+      if (res.ret && res.data) {
+        const data = res.data
+        this.city = data.city
+        this.swiperList = data.swiperList
+        this.iconList= data.iconList
+        this.recommendList = data.recommendList
+        this.weekendList = data.weekendList
+      }
+    }
+  },
+
+  mounted () {
+    this.getHomeInfo()
+  }
+~~~
+
+
+
+在mounted 生命周期函数里去请求。
+
+```
+beforecreated：el 和 data 并未初始化 
+created:完成了 data 数据的初始化，el没有
+beforeMount：完成了 el 和 data 初始化 
+mounted ：完成挂载
+
+我们请求回来的初始化数据或者基础数据是不是需要挂在Vue的Data上面？（是的，需要√）
+然后我们继续beforeCreate的时候Data有没有生成？（答案是：没有。×）
+--所以这一步是无法把数据挂到Vue的Data上面的
+然后我继续看created的时候Data有没有生成？（答案是：生成啦。√）
+--所以这一步我们是可以把数据挂到Vue的Data上面的,是不是可以放在这里啦？
+--是的，可以放在这里啦。所以最后结论就是放在created里面。
+
+（1）mounted
+
+　　如果把所有请求放在created里面的话,请求过多会,加载太慢会导致页面出现短暂的白屏情况,一般上我写的话,接口不复杂会放created里面,接口多复杂的话会放在mounted里面.
+
+（2）mounted
+
+　　created 是加载DOM,html之后 就马上执行, 比如初始化,获取屏幕高度调整,赋值等等,而mounted就是执行包括js之后,准备开始调用方法,也就是说 类似传统开发那样,先加载jquery 再调用插件
+```
+
+然后请求回来大的数据就会放在home组件。此时就需要父组件给子组件传递数据，用属性，然后子组件接受props
+

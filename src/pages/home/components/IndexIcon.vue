@@ -14,58 +14,22 @@
 /*eslint-disable*/ 
 export default {
     name:'IndexIcon',
+    props: {
+      'list': Array
+    },
     data () {
       return {
         swiperOption: {
           loop: true,
           autoplay:false
-        },
-        iconList: [{
-        id:'001',
-        imgUrl:'/static/icons/1.png',
-        desc:'景点门票'
-      },
-      {id:'002',
-        imgUrl:'/static/icons/2.png',
-        desc:'泡温泉'},
-      {
-        id:'003',
-        imgUrl:'/static/icons/3.png',
-        desc:'滑雪季'
-      },{
-        id:'004',
-        imgUrl:'/static/icons/4.png',
-        desc:'动植物园'
-      } , 
-      {
-        id:'005',
-        imgUrl:'/static/icons/5.png',
-        desc:'一日游'
-      },{
-        id:'006',
-        imgUrl:'/static/icons/6.png',
-        desc:'必游榜单'
-      },{
-        id:'007',
-        imgUrl:'/static/icons/7.png',
-        desc:'自然风光'
-      },{
-        id:'008',
-        imgUrl:'/static/icons/8.png',
-        desc:'全部'
-      },{
-        id:'009',
-        imgUrl:'/static/icons/5.png',
-        desc:'一日游'
-      }]
-
+        }
       }
       
     },
     computed: {
       pages () {
         const pages = []
-        this.iconList.forEach((item,index) => {
+        this.list.forEach((item,index) => {
           const page=Math.floor(index / 8)
           if(!pages[page]){
             pages[page] = []
