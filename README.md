@@ -618,3 +618,84 @@ router-link 帮助我们能实现从首页的北京跳转到另一个页面。
 ![image-20220411203953257](https://raw.githubusercontent.com/HYHL0909/images/main/202204112039511.png)
 
  
+
+
+
+为啥float 的上一级要overflow hidden 触发brc
+
+
+
+~~~stylus
+.list
+    position: absolute
+    top: 1.58rem
+    left: 0
+    right: 0
+    bottom: 0
+    overflow: hidden
+~~~
+
+我们不想让list撑出来，因此，
+
+我们想要用better-scoll库实现酷炫的效果
+
+就是你拉的时候有个弹弹的效果
+
+如何使用better-scroll 库
+
+getting started
+
+dom结构要满足这样的效果
+
+~~~html
+<div class="wrapper">
+  <ul class="content">
+    <li>...</li>
+    <li>...</li>
+    ...
+  </ul>
+  <!-- you can put some other DOMs here, it won't affect the scrolling-->
+</div>
+~~~
+
+也可以是
+
+~~~html
+<div>
+    <div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</div>
+~~~
+
+导入库
+
+~~~JavaScript
+<script>
+import BScroll from '@better-scroll/core'
+export default {
+  name: 'CityList',
+  mounted () {
+      this.scroll = new BScroll(this.$refs.wrapper)
+  }
+}
+</script>
+~~~
+
+字母表的布局使用position完成。
+
+~~~stylus
+.list 
+    display:flex
+    flex-direction: column
+    justify-content: center
+    text-align: center
+    position: absolute
+    top: 1.58rem
+    right:0
+    bottom:0
+    width:.4rem
+~~~
+
