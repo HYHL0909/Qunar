@@ -585,3 +585,37 @@ mounted ：完成挂载
 
 然后请求回来大的数据就会放在home组件。此时就需要父组件给子组件传递数据，用属性，然后子组件接受props
 
+## 第十次提交：第二个页面---城市页面
+
+配置router
+
+index.js 里router配置。
+
+~~~js
+ routes: [
+    {
+      path: '/',
+      name: 'Home',
+      component: Home
+    },{
+      path: '/city',
+      name: 'City',
+      component: City
+    }
+  ]
+~~~
+
+
+
+router-link 帮助我们能实现从首页的北京跳转到另一个页面。
+
+~~~html
+<router-link to='./city'>
+      <div class="header-right">{{this.city}}<span class="iconfont down">&#xe65c;</span></div>
+   </router-link>
+~~~
+
+![image-20220411203953257](https://raw.githubusercontent.com/HYHL0909/images/main/202204112039511.png)
+
+我们只做国内的城市选择
+

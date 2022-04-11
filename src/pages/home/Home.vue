@@ -29,7 +29,7 @@ export default {
       swiperList: [],
       iconList: [],
       recommendList: [],
-      weekendList:[]
+      weekendList: []
     }
   },
   methods: {
@@ -42,7 +42,7 @@ export default {
         const data = res.data
         this.city = data.city
         this.swiperList = data.swiperList
-        this.iconList= data.iconList
+        this.iconList = data.iconList
         this.recommendList = data.recommendList
         this.weekendList = data.weekendList
       }
