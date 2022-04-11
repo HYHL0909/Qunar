@@ -617,5 +617,4 @@ router-link 帮助我们能实现从首页的北京跳转到另一个页面。
 
 ![image-20220411203953257](https://raw.githubusercontent.com/HYHL0909/images/main/202204112039511.png)
 
-我们只做国内的城市选择
-
+ 
