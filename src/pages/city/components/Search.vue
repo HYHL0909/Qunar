@@ -43,7 +43,7 @@ export default {
       }
       if(!this.keyword){
         this.list = []
-        return
+        return 
       }
       this.timer = setTimeout(()=>{
         console.log(this.cities)
