@@ -80,6 +80,7 @@ export default {
       height: .62rem
       line-height: .62rem
       border-radius: .06rem   
+<<<<<<< HEAD
   .search-content
     position: absolute
     top 1.58rem
@@ -95,4 +96,6 @@ export default {
       border-bottom: 0.5px solid #ccc
       color: #666
       
+=======
+>>>>>>> 73655e40e5237a33e628d77180b6c3831b3ac553
 </style>

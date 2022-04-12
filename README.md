@@ -807,6 +807,7 @@ export default {
 
    优化：减少执行频率,使用timer
 
+<<<<<<< HEAD
 
 
 
@@ -858,4 +859,5 @@ if(!this.keyword){
         return
       }
 ~~~
+
 
