@@ -702,3 +702,109 @@ export default {
 
 
 利用axios获取城市页面的数据！
+
+
+
+
+
+功能实现：
+
+1. 就是我们点击字母表页面中某个字母时，能够跳转到对应的城市页面。
+
+    实现兄弟组件之间通信：
+
+   - bus
+
+   - 传递给父组件，再由父组件传递给子组件。（简单的）。而且在本例里，子组件会发送两次emit给父组件，父组件只需要要处理一次（因为逻辑相同）。
+
+     alphabet传递给City，
+
+     点击alphabet中的item后，利用emit发送当前事件发生的元素里的内容。
+
+     ~~~JavaScript
+     handleLetterClick (e) {
+           // let target = e.target;表示的是e（event）发生的位置。
+           this.$emit('change',e.target.innerText)
+         },
+     ~~~
+
+     父组件监听事件，然后接收数据，放在自己的letter数据里。
+
+     City再传给list ，利用属性 props。
+
+     City利用watch监听letter的变化，一旦letter发生变化，说明点击了其他字母，那么滚轮就滚动到相应的部分。
+
+     ~~~javascript
+      watch: {
+           letter () {
+               if(this.letter){
+                   const element = this.$refs[this.letter][0]
+                   this.scroll.scrollToElement(element)
+               }
+           }
+       }
+     ~~~
+
+     
+
+2. 滚动事件的监听。
+
+   只有touchstart执行后才能执行touchmove
+
+   实现：定义一个数据，touchStatus：false
+
+   ~~~javascript
+    handleTouchStart () {
+         this.touchStatus = true
+       },
+       handleTouchMove (e) {
+         if(this.touchStatus){
+          
+         }
+       },
+       handleTouchEnd () {
+         this.touchStatus = false
+       }
+   ~~~
+
+   滑动到哪个字母就跳转到哪个部分的逻辑实现。
+
+   ![image-20220412114457667](https://raw.githubusercontent.com/HYHL0909/images/main/202204121144993.png)
+
+   
+
+   A到header下面的距离：
+
+   ~~~JavaScript
+   const startY = this.$refs['A'][0].offsetTop
+   ~~~
+
+   滑动到的字母的距离里header的距离
+
+   header的高度 79
+
+   ~~~JavaScript
+    const touchY = e.touches[0].clientY - 79
+   ~~~
+
+   字母的高度 22px、
+
+   ~~~JavaScript
+   const index = Math.floor((touchY - startY) / 22)
+   ~~~
+
+   数据发生了改变，发送给父组件。
+
+   
+
+   ~~~JavaScript
+   if (index >= 0 && index < this.letters.length) {
+                this.$emit('change',this.letters[index])
+                }
+   ~~~
+
+   
+
+   优化：减少执行频率,使用timer
+
+   
