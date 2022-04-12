@@ -996,3 +996,49 @@ this.changeCity(city)
 
 
 getters,：类似于计算属性的作用。假如要根据state获得一些计算属性时，可以to
+
+
+
+## 第十三次提交 ：城市选择页使用keep-alive优化网页性能。
+
+![image-20220412223547451](https://raw.githubusercontent.com/HYHL0909/images/main/202204122235713.png)
+
+从主页到城市页面就得请求一次数据，这使得性能很差。
+
+为什么会每次切换都有请求呢。
+
+因为每次路由我们都会重新渲染，就会执行mounted。
+
+因此我们使用keepalive
+
+将router 包裹起来。
+
+~~~html
+    <keep-alive>
+      <router-view/>
+    </keep-alive>
+~~~
+
+
+
+当选择北京时，首页的内容应该改成相应的内容。
+
+但是因为我们上面使用了keepalive，则会缓存，因此我们无法更新首页的数据。
+
+但是因为我们用了keepalive，则组件会多了一个方法 activated。
+
+当我们在首页添加了activated函数，则每次回到首页都会执行activated
+
+我们在activated里判断一下城市是否有改变
+
+如果改变了再去请求ajax。
+
+~~~JavaScript
+  activated () {
+    if (this.lastCity!== this.city){
+      this.getHomeInfo()
+      this.lastCity = this.city
+    }
+  }
+~~~
+
