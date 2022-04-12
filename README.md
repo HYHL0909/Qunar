@@ -466,7 +466,6 @@ ellipsis()
 
 然后在样式里去引用。
 ## 第七次提交：推荐部分的实现
-
 ![image-20220410163004463](https://raw.githubusercontent.com/HYHL0909/images/main/202204101630981.png)
 
 网页布局
@@ -492,3 +491,371 @@ ellipsis()
 让item-info占据剩余的空间`flex:1`
 
 最后注意一点：就是当`item-desc`内容很多的时候我们可以让它以省略号的方式出现，但是此时记得先把`item-info的min-width `设置为0.
+
+
+
+## 第八次提交：周末游组件
+
+![image-20220410214234412](https://raw.githubusercontent.com/HYHL0909/images/main/202204102142636.png)
+
+就是和上面的推荐部分组件很像。
+
+## 第九次提交 ：动态获取首页内容
+
+让我们动态获取首页的内容，比如一些图片，logo等等
+
+`axios`进行ajax项目的请求。
+
+安装 npm
+
+static 里放数据。放在本地，不上传到库，那么就 `.gitignore`里添加地址。
+
+将本地地址改成api
+
+代理功能。config里的index.js
+
+是webpack-dev-server 提供的
+
+~~~js
+ proxyTable: {
+      '/api':{
+        target: 'http://localhost:8080',
+        pathRewrite: {
+          '^/api': '/static/mock'
+        }
+      }
+~~~
+
+记住改了配置要重新启动服务器
+
+
+
+我们利用axios 获取数据，记住在home里请求。请求一次比请求很多次好
+
+
+
+~~~JavaScript
+  methods: {
+    getHomeInfo () {
+      axios.get('/api/index.json').then(this.getHomeInfoSucc)
+    },
+    getHomeInfoSucc (res) {
+      res = res.data
+      if (res.ret && res.data) {
+        const data = res.data
+        this.city = data.city
+        this.swiperList = data.swiperList
+        this.iconList= data.iconList
+        this.recommendList = data.recommendList
+        this.weekendList = data.weekendList
+      }
+    }
+  },
+
+  mounted () {
+    this.getHomeInfo()
+  }
+~~~
+
+
+
+在mounted 生命周期函数里去请求。
+
+```
+beforecreated：el 和 data 并未初始化 
+created:完成了 data 数据的初始化，el没有
+beforeMount：完成了 el 和 data 初始化 
+mounted ：完成挂载
+
+我们请求回来的初始化数据或者基础数据是不是需要挂在Vue的Data上面？（是的，需要√）
+然后我们继续beforeCreate的时候Data有没有生成？（答案是：没有。×）
+--所以这一步是无法把数据挂到Vue的Data上面的
+然后我继续看created的时候Data有没有生成？（答案是：生成啦。√）
+--所以这一步我们是可以把数据挂到Vue的Data上面的,是不是可以放在这里啦？
+--是的，可以放在这里啦。所以最后结论就是放在created里面。
+
+（1）mounted
+
+　　如果把所有请求放在created里面的话,请求过多会,加载太慢会导致页面出现短暂的白屏情况,一般上我写的话,接口不复杂会放created里面,接口多复杂的话会放在mounted里面.
+
+（2）mounted
+
+　　created 是加载DOM,html之后 就马上执行, 比如初始化,获取屏幕高度调整,赋值等等,而mounted就是执行包括js之后,准备开始调用方法,也就是说 类似传统开发那样,先加载jquery 再调用插件
+```
+
+然后请求回来大的数据就会放在home组件。此时就需要父组件给子组件传递数据，用属性，然后子组件接受props
+
+## 第十次提交：第二个页面---城市页面
+
+配置router
+
+index.js 里router配置。
+
+~~~js
+ routes: [
+    {
+      path: '/',
+      name: 'Home',
+      component: Home
+    },{
+      path: '/city',
+      name: 'City',
+      component: City
+    }
+  ]
+~~~
+
+
+
+router-link 帮助我们能实现从首页的北京跳转到另一个页面。
+
+~~~html
+<router-link to='./city'>
+      <div class="header-right">{{this.city}}<span class="iconfont down">&#xe65c;</span></div>
+   </router-link>
+~~~
+
+![image-20220411203953257](https://raw.githubusercontent.com/HYHL0909/images/main/202204112039511.png)
+
+ 
+
+
+
+为啥float 的上一级要overflow hidden 触发brc
+
+
+
+~~~stylus
+.list
+    position: absolute
+    top: 1.58rem
+    left: 0
+    right: 0
+    bottom: 0
+    overflow: hidden
+~~~
+
+我们不想让list撑出来，因此，
+
+我们想要用better-scoll库实现酷炫的效果
+
+就是你拉的时候有个弹弹的效果
+
+如何使用better-scroll 库
+
+getting started
+
+dom结构要满足这样的效果
+
+~~~html
+<div class="wrapper">
+  <ul class="content">
+    <li>...</li>
+    <li>...</li>
+    ...
+  </ul>
+  <!-- you can put some other DOMs here, it won't affect the scrolling-->
+</div>
+~~~
+
+也可以是
+
+~~~html
+<div>
+    <div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+</div>
+~~~
+
+导入库
+
+~~~JavaScript
+<script>
+import BScroll from '@better-scroll/core'
+export default {
+  name: 'CityList',
+  mounted () {
+      this.scroll = new BScroll(this.$refs.wrapper)
+  }
+}
+</script>
+~~~
+
+字母表的布局使用position完成。
+
+~~~stylus
+.list 
+    display:flex
+    flex-direction: column
+    justify-content: center
+    text-align: center
+    position: absolute
+    top: 1.58rem
+    right:0
+    bottom:0
+    width:.4rem
+~~~
+
+
+
+利用axios获取城市页面的数据！
+
+
+
+
+
+功能实现：
+
+1. 就是我们点击字母表页面中某个字母时，能够跳转到对应的城市页面。
+
+    实现兄弟组件之间通信：
+
+   - bus
+
+   - 传递给父组件，再由父组件传递给子组件。（简单的）。而且在本例里，子组件会发送两次emit给父组件，父组件只需要要处理一次（因为逻辑相同）。
+
+     alphabet传递给City，
+
+     点击alphabet中的item后，利用emit发送当前事件发生的元素里的内容。
+
+     ~~~JavaScript
+     handleLetterClick (e) {
+           // let target = e.target;表示的是e（event）发生的位置。
+           this.$emit('change',e.target.innerText)
+         },
+     ~~~
+
+     父组件监听事件，然后接收数据，放在自己的letter数据里。
+
+     City再传给list ，利用属性 props。
+
+     City利用watch监听letter的变化，一旦letter发生变化，说明点击了其他字母，那么滚轮就滚动到相应的部分。
+
+     ~~~javascript
+      watch: {
+           letter () {
+               if(this.letter){
+                   const element = this.$refs[this.letter][0]
+                   this.scroll.scrollToElement(element)
+               }
+           }
+       }
+     ~~~
+
+     
+
+2. 滚动事件的监听。
+
+   只有touchstart执行后才能执行touchmove
+
+   实现：定义一个数据，touchStatus：false
+
+   ~~~javascript
+    handleTouchStart () {
+         this.touchStatus = true
+       },
+       handleTouchMove (e) {
+         if(this.touchStatus){
+          
+         }
+       },
+       handleTouchEnd () {
+         this.touchStatus = false
+       }
+   ~~~
+
+   滑动到哪个字母就跳转到哪个部分的逻辑实现。
+
+   ![image-20220412114457667](https://raw.githubusercontent.com/HYHL0909/images/main/202204121144993.png)
+
+   
+
+   A到header下面的距离：
+
+   ~~~JavaScript
+   const startY = this.$refs['A'][0].offsetTop
+   ~~~
+
+   滑动到的字母的距离里header的距离
+
+   header的高度 79
+
+   ~~~JavaScript
+    const touchY = e.touches[0].clientY - 79
+   ~~~
+
+   字母的高度 22px、
+
+   ~~~JavaScript
+   const index = Math.floor((touchY - startY) / 22)
+   ~~~
+
+   数据发生了改变，发送给父组件。
+
+   
+
+   ~~~JavaScript
+   if (index >= 0 && index < this.letters.length) {
+                this.$emit('change',this.letters[index])
+                }
+   ~~~
+
+   
+
+   优化：减少执行频率,使用timer
+
+
+
+
+## 第十一次提交：城市页面的搜索部分实现
+
+功能:搜索的时候显示相关的城市，如果数量够多还可以实现滚轮的效果。（div）v-show scroll,如果没有内容就不显示。
+
+v-show=“keyword”
+
+如果没有找到相关的城市，就显示没有找到数据。（div）用v-show表示显示或不显示
+
+~~~html
+v-show="hasNoData"
+computed:{
+hasNoData () {
+return this.list.length
+}
+}
+~~~
+
+
+
+主逻辑：
+
+搜索的内容可以用v-model绑定到keyword里，
+
+search 接受 cities。
+
+然后监听keyword。
+
+如果keyword改变了，我们就遍历数组cities看有没有这个，如果由就放在list里，然后展示list里的数据。
+
+~~~javascript
+const result = []
+        for(let i in this.cities) {
+          this.cities[i].forEach((element) => {
+            if(element.spell.indexOf(this.keyword) > -1||element.name.indexOf(this.keyword) > -1){
+              result.push(element)
+            }
+~~~
+
+
+
+但是只要你输入过keyword，那么list里就会有内容，即使我们删除掉keyword还是会有，因此我们要有判断。
+
+~~~javascript
+if(!this.keyword){
+        this.list = []
+        return
+      }
+~~~
+

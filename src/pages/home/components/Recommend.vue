@@ -2,8 +2,8 @@
   <div>
       <div class="title">热销推荐</div>
       <ul>
-          <li class="item" v-for="item of recommendList" :key="item.id">
-            <img class="item-img" :src="item.url" >
+          <li class="item" v-for="item of list" :key="item.id">
+            <img class="item-img" :src="item.imgUrl" >
             <div class="item-info">
                 <p class="item-title">{{item.title}}</p>
                 <p class="item-desc">{{item.desc}}</p>
@@ -12,27 +12,13 @@
           </li>
       </ul>
   </div>
-  
 </template>
 <script>
+/*eslint-disable */
 export default {
   name: 'HomeRecommend',
-  data () {
-      return{
-          recommendList:[
-              {
-                  id: '001',
-              url: "https://imgs.qunarzz.com/sight/p0/1602/22/22b6ddfc418d0c3b90.water.jpg_224x148_8d9c8087.jpg",title: "颐和园",desc: "走入清朝皇帝的皇家园林走入清朝皇帝的皇家园林走入清朝皇帝的皇家园林走入清朝皇帝的皇家园林走入清朝皇帝的皇家园林"}, {
-                  id: '002',
-              url: "https://imgs.qunarzz.com/sight/p0/1602/22/22b6ddfc418d0c3b90.water.jpg_224x148_8d9c8087.jpg",title: "颐和园",desc: "走入清朝皇帝的皇家园林走入清朝皇帝的皇家园林走入清朝皇帝的皇家园林走入清朝皇帝的皇家园林走入清朝皇帝的皇家园林"},{
-                  id: '003',
-              url: "https://imgs.qunarzz.com/sight/p0/1602/22/22b6ddfc418d0c3b90.water.jpg_224x148_8d9c8087.jpg",title: "颐和园",desc: "走入清朝皇帝的皇家园林走入清朝皇帝的皇家园林走入清朝皇帝的皇家园林走入清朝皇帝的皇家园林走入清朝皇帝的皇家园林"
-              },{
-                  id: '004',
-              url: "https://imgs.qunarzz.com/sight/p0/1602/22/22b6ddfc418d0c3b90.water.jpg_224x148_8d9c8087.jpg",title: "颐和园",desc: "走入清朝皇帝的皇家园林走入清朝皇帝的皇家园林走入清朝皇帝的皇家园林走入清朝皇帝的皇家园林走入清朝皇帝的皇家园林"
-              }
-          ]
-      }
+  props: {
+      'list':Array
   }
 }
 </script>
@@ -40,11 +26,11 @@ export default {
 @import '~styles/mixins.styl';
  .title
    margin-top: .2rem
-   line-height: .8rem
-   font-size: .4rem
+   line-height: .7rem
+   font-size: .3rem
    background: #eee
    text-indent: .3rem
-   height:0.8rem
+   height:0.7rem
 .item
   display: flex
   height: 1.9rem
@@ -60,7 +46,7 @@ export default {
     min-width:0
     .item-title
       line-height: .54rem
-      font-size: .40rem
+      font-size: .34rem
       ellipsis()
     .item-desc
       line-height: .4rem
