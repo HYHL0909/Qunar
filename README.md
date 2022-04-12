@@ -860,4 +860,139 @@ if(!this.keyword){
       }
 ~~~
 
+## 第十二次提交 Vuex实现数据共享
 
+实现在城市页面选择城市首页的城市也会跟着改变
+
+Home和City组件之间数据的传递
+
+bus
+
+vuex
+
+![image-20220412172121193](https://raw.githubusercontent.com/HYHL0909/images/main/202204121721642.png)
+
+vuex是共享的数据仓库，state存放数据。
+
+组件要去改变state里的数据，只能通过dispatch调用action，action通过commit调用mutations，或者数据比较简单，组件直接通过commit调用mutation。
+
+~~~js
+export default new Vuex.Store({
+  state: {
+    city: '南京'
+  },
+  actions:{
+    changeCity (ctx,city) {
+        ctx.commit('changeCity',city)
+    }
+  },
+  mutations:{
+      changeCity(state,city){
+          state.city = city
+      }
+  }
+})
+~~~
+
+
+
+安装
+
+让我们来创建一个 store
+
+~~~JavaScript
+import Vue from 'vue'
+import Vuex from 'vuex'
+
+Vue.use(Vuex)
+
+export default new Vuex.Store({
+  state: {
+    city: '北京'
+  }
+})
+~~~
+
+
+
+功能，首页的城市是北京，点进去当前城市也要是北京，这就是共享哪个数据库（vuex）就可以了
+
+我们通过点击热门城市去改变store里的数据。而且要进入首页
+
+进入首页用vue-router
+
+~~~js
+this.$router.push('/') 
+~~~
+
+
+
+点击城市列表也可以进行城市的切换
+
+点击城市页面里的搜索的城市也要能城市的切换
+
+
+
+
+
+上面功能实现的缺陷：
+
+我们store里state 中city默认的值是南京，因此，尽管我们选择的是北京，但是一刷新，就又回到南京，我们应该实现的是让它能够记住自己上次所选择的。
+
+利用localStorage存储选择的城市。
+
+记住localStorage外面最好包裹一层throw catch
+
+然后store里index.js 太大了，我们将他们拆分。
+
+vuex代码优化。
+
+mapState
+
+~~~js
+this.$store.state.city //插件，包括router都可以使用$使用。
+~~~
+
+~~~javascript
+<script>
+import { mapState } from 'vuex'
+export default {
+  name: 'Homeheader',
+  computed:{
+    ...mapState(['city'])
+        }//该组件有个计算属性叫做city，它是映射state里的city。//相当于
+ //  computed:{
+   // ...mapState({
+   //   city:'city'
+   // })
+ // }    
+//因此我们 this.city = this.$store.state.city 
+
+}
+</script>
+~~~
+
+
+
+mapMutation
+
+~~~JavaScript
+this.$store.commit('changeCity',city) 
+//用下列代替
+this.changeCity(city)
+
+~~~
+
+~~~javascript
+  methods: {
+      handleCityClick(city){
+        this.changeCity(city)
+         this.$router.push('/') 
+      },
+      ...mapMutations(['changeCity'])
+  },
+~~~
+
+
+
+getters,：类似于计算属性的作用。假如要根据state获得一些计算属性时，可以to
