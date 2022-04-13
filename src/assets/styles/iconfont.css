@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 3311653 */
-  src: url('./iconfont/iconfont.woff2?t=1649401040292') format('woff2'),
-       url('./iconfont/iconfont.woff?t=1649401040292') format('woff'),
-       url('./iconfont/iconfont.ttf?t=1649401040292') format('truetype');
+  src: url('./iconfont/iconfont.woff2?t=1649817194316') format('woff2'),
+       url('./iconfont/iconfont.woff?t=1649817194316') format('woff'),
+       url('./iconfont/iconfont.ttf?t=1649817194316') format('truetype');
 }
 
 .iconfont {
@@ -11,5 +11,53 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-pic-fill:before {
+  content: "\e72e";
+}
+
+.icon-jingdian:before {
+  content: "\e67d";
+}
+
+.icon-dangdiwanle-yiriyou:before {
+  content: "\e600";
+}
+
+.icon-zu:before {
+  content: "\e70a";
+}
+
+.icon-icon-remenjingdian2x1111:before {
+  content: "\e60d";
+}
+
+.icon-wenquan:before {
+  content: "\e601";
+}
+
+.icon-huaxueji:before {
+  content: "\e689";
+}
+
+.icon-dongzhiwuyuan:before {
+  content: "\e68c";
+}
+
+.icon-quanbu:before {
+  content: "\e613";
+}
+
+.icon-icon-test:before {
+  content: "\e63c";
+}
+
+.icon-icon-test1:before {
+  content: "\e658";
+}
+
+.icon-icon-test2:before {
+  content: "\e65c";
 }
 
