@@ -1066,3 +1066,74 @@ getters,：类似于计算属性的作用。假如要根据state获得一些计�
 ## 第十六次提交：detail-list
 
 使用递归组件实现详情页的列表
+
+## 第十七次提交：detail-ajax
+
+ajax 请求
+
+在主页上访问而不是组件。
+
+导入包
+
+在mounted里发送请求
+
+要将路由中的参数带给后端的做法：
+
+~~~js
+ mounted () {
+      this.getDetailInfo() 
+    },
+    methods: {
+        getDetailInfo () {
+            axios.get('/api/detail.json',{
+                params: {
+                    id:this.$route.params.id
+                }
+            })
+
+        }
+    }
+~~~
+
+
+
+$router 
+
+和$route 不一样的。
+
+因为是keepalive，所以每次只会执行一次mounted请求。因此我们可以配合使用activated方法。
+
+或者另外一种方法就是我们不把它包进去。
+
+~~~html
+    <keep-alive exclude="Detail">
+      <router-view/>
+    </keep-alive>
+~~~
+
+所有组件都会被缓存，除了detail页面。
+
+
+
+组件名字的用处：
+
+1. 递归
+2. 缓存排除
+3. vue开发工具。
+
+
+
+首页拖到下面再进详情页，详情页也会被拖到下面。
+
+使用vue-router的滚动行为解决
+
+使用前端路由，当切换到新路由时，想要页面滚到顶部，或者是保持原先的滚动位置，就像重新加载页面那样。 vue-router 能做到，而且更好，它让你可以自定义路由切换时页面如何滚动。
+
+回到顶部
+
+~~~js
+  scrollBehavior (to, from, savedPosition) {
+    return { x:0,y:0}
+  }
+~~~
+
