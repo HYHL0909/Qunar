@@ -1052,3 +1052,17 @@ getters,：类似于计算属性的作用。假如要根据state获得一些计�
 
 实现一个滚动时上面的header若隐若现，用opacity。
 
+因为keepalive的组件会有activated，因此我们使用activated，对事件进行绑定，同时，要记得解绑事件。
+
+~~~js
+ activated () {
+        window.addEventListener('scroll',this.handleScroll)
+    },
+    deactivated () {
+        window.removeEventListener('scroll',this.handleScroll)
+    }
+~~~
+
+## 第十六次提交：detail-list
+
+使用递归组件实现详情页的列表
